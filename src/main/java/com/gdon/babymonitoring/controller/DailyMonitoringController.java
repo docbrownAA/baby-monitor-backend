@@ -7,6 +7,8 @@ package com.gdon.babymonitoring.controller;
 
 import com.gdon.babymonitoring.model.DailyMonitor;
 import com.gdon.babymonitoring.service.DailyMonitoringService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -40,11 +42,46 @@ public class DailyMonitoringController {
     }
 
     @RequestMapping(method = POST)
-    public void dailyMonitor(@RequestParam(value = "entryDay", required = true) final Date entryDay,
+    public void dailyMonitor(@RequestParam(value = "entryDay", required = true) final String entryDay,
             @RequestParam(value = "amountTaken", required = true) final int amountTaken,
             @RequestParam(value = "comment", required = false) final String comment,
             @RequestParam(value = "amountPrepared", required = true) final int amountPrepared,
-            @RequestParam(value = "entryHour", required = true) final Date entryHour) {
+            @RequestParam(value = "entryHour", required = true) final String entryHour) {
+        try {
+            dailyMonitoringService.push(convertEntryDateToDate(entryDay), amountTaken, amountPrepared, convertEntryHourToHour(entryHour));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private Date convertEntryDateToDate(String entryDay) throws Exception {
+        entryDay = "2016-06-19";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+
+            Date date = formatter.parse(entryDay);
+            return date;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new Exception("Format de date incorrect");
+        }
+    }
+
+    private Date convertEntryHourToHour(String entryHour) throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+
+        try {
+
+            Date date = formatter.parse(entryHour);
+            return date;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new Exception("Format de date incorrect");
+        }
     }
 }

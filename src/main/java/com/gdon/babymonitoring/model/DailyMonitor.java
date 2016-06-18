@@ -6,6 +6,8 @@
 package com.gdon.babymonitoring.model;
 
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -13,6 +15,7 @@ import java.util.Date;
  */
 public class DailyMonitor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DailyMonitor.class);
     private int id;
     private Date entryDay;
     private int amountTaken;
@@ -21,21 +24,38 @@ public class DailyMonitor {
     private Date entryHour;
     private Quantity peeQuantity;
 
-    public DailyMonitor(int id, Date entryDay, int amountTaken, String comment, int amountPrepared, Date entryHour) {
-        this.id = id;
-        this.entryDay = entryDay;
-        this.amountTaken = amountTaken;
-        this.amountPrepared = amountPrepared;
-        this.entryHour = entryHour;
-        this.comment = comment;
+    public DailyMonitor(Date entryDay, int amountTaken, String comment, int amountPrepared, Date entryHour) {
+        try {
+
+            this.entryDay = entryDay;
+            this.amountTaken = amountTaken;
+            this.amountPrepared = amountPrepared;
+            this.entryHour = entryHour;
+            this.comment = comment;
+            LOGGER.info("Constructeur: "
+                    + this.toString()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public DailyMonitor(int id, Date entryDay, int amountTaken, int amountPrepared, Date entryHour) {
-        this.id = id;
-        this.entryDay = entryDay;
-        this.amountTaken = amountTaken;
-        this.amountPrepared = amountPrepared;
-        this.entryHour = entryHour;
+    @Override
+    public String toString() {
+        return "DailyMonitor{" + "id=" + id + ", entryDay=" + entryDay + ", amountTaken=" + amountTaken + ", comment=" + comment + ", amountPrepared=" + amountPrepared + ", entryHour=" + entryHour + ", peeQuantity=" + peeQuantity + '}';
+    }
+
+    public DailyMonitor(Date entryDay, int amountTaken, int amountPrepared, Date entryHour) {
+        try {
+            this.id = id;
+            this.entryDay = entryDay;
+            this.amountTaken = amountTaken;
+            this.amountPrepared = amountPrepared;
+            this.entryHour = entryHour;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getId() {

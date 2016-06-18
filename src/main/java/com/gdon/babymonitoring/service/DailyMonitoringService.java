@@ -26,13 +26,14 @@ public class DailyMonitoringService {
     @Autowired
     private DailyMonitoringRepositoryImpl dailyMonitoringRepositoryImpl;
 
-    public void push(final int id, Date entryDay, final int amountTaken, final String comment, final int amountPrepared, final Date entryHour) {
-        final DailyMonitor dailyMonitoring = new DailyMonitor(id, entryDay, amountTaken, comment, amountPrepared, entryHour);
+    public void push(final Date entryDay, final int amountTaken, final String comment, final int amountPrepared, final Date entryHour) {
+        final DailyMonitor dailyMonitoring = new DailyMonitor(entryDay, amountTaken, comment, amountPrepared, entryHour);
         dailyMonitoringRepositoryImpl.getDailyMonitorings().add(dailyMonitoring);
     }
 
-    public void push(final int id, final Date entryDay, final int amountTaken, final int amountPrepared, final Date entryHour) {
-        final DailyMonitor dailyMonitoring = new DailyMonitor(id, entryDay, amountTaken, amountPrepared, entryHour);
+    public void push(final Date entryDay, final int amountTaken, final int amountPrepared, final Date entryHour) {
+        final DailyMonitor dailyMonitoring = new DailyMonitor(entryDay, amountTaken, amountPrepared, entryHour);
+        dailyMonitoringRepositoryImpl.getDailyMonitorings().add(dailyMonitoring);
     }
 
     public List<DailyMonitor> getAll() {
